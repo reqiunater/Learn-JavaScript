@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        td>button {
+            width: 100%;
+            height: 8vh;
+            font-size: larger;
+            font-weight: bold;
+        }
+
+        td {
+            width: 10vw;
+            height: 8vh;
+        }
+
+        td>input {
+            width: 100%;
+            height: 8vh;
+            font-size: larger;
+        }
+
+        table {
+            max-width: 50vw;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calcu">
+        <table>
+            <tr>
+                <td colspan="4"><input type="text" id="display" class="display" readonly></td>
+            </tr>
+            <tr>
+                <!-- <td><button onclick="insertDisplay('(')">(</button></td>
+                <td><button onclick="insertDisplay(')')">)</button></td> -->
+                <td colspan="2"><button onclick="insertDisplay('%')">%</button></td>
+                <td colspan="2"><button onclick="clearDisplay()">C</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="insertDisplay('7')">7</button></td>
+                <td><button onclick="insertDisplay('8')">8</button></td>
+                <td><button onclick="insertDisplay('9')">9</button></td>
+                <td><button onclick="insertDisplay('÷')">÷</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="insertDisplay('4')">4</button></td>
+                <td><button onclick="insertDisplay('5')">5</button></td>
+                <td><button onclick="insertDisplay('6')">6</button></td>
+                <td><button onclick="insertDisplay('x')">x</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="insertDisplay('1')">1</button></td>
+                <td><button onclick="insertDisplay('2')">2</button></td>
+                <td><button onclick="insertDisplay('3')">3</button></td>
+                <td><button onclick="insertDisplay('-')">-</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="insertDisplay('0')">0</button></td>
+                <td><button onclick="insertDisplay('.')">.</button></td>
+                <td><button onclick="calculate()">=</button></td>
+                <td><button onclick="insertDisplay('+')">+</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="output"></div>
+
+    <script>
+        let display = document.getElementById('display');
+
+        document.addEventListener('keydown', function (event) {
+            // Deteksi angka dan operator dari keyboard
+            if (event.key >= '0' && event.key <= '9' || ['+', '-', '*', '/', '%'].includes(event.key)) {
+                insertDisplay(event.key);
+            } else if (event.key === 'Enter') {
+                calculate();
+            } else if (event.key === 'Backspace') {
+                display.value = display.value.slice(0, -1);
+            }
+        });
+
+        function insertDisplay(value) {
+            display.value += value;
+        }
+
+        function calculate() {
+            try {
+                display.value = eval(display.value.replace(/x/g, '*').replace(/÷/g, '/'));
+            } catch {
+                display.value = "Error";
+            }
+        }
+
+        function clearDisplay() {
+            display.value = "";
+        }
+    </script>
+</body>
+
+</html>
